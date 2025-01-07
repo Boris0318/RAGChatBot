@@ -1,4 +1,4 @@
 streamlit
-llama_stack
-llama_stack_client
+llama_stack==0.0.61
+llama_stack_client==0.0.61
 termcolor
