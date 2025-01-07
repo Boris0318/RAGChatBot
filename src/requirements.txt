@@ -1,4 +1,1 @@
-streamlit
-llama_stack
-llama_stack_client
-termcolor
+
