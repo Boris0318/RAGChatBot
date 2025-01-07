@@ -1,5 +1,5 @@
 import streamlit as st
-from src.RAG import get_rag_responses
+from RAG import get_rag_responses
 
 # Title of the app
 st.title("RAG Model Chatbot")
