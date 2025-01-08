@@ -1,3 +1,4 @@
 streamlit
 llama-stack-client>=0.0.63
+llama-stack>=0.0.63
 termcolor
