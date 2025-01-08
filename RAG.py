@@ -11,7 +11,8 @@ load_dotenv()
 
 
 # Initialize the LlamaStack client
-os.environ['TOGETHER_API_KEY'] = os.getenv('API_KEY')
+# os.environ['TOGETHER_API_KEY'] = os.getenv('API_KEY')
+os.environ['TOGETHER_API_KEY'] = '8c416c1d37fba4cd88428e8ba5a7f0cd4a599c22e8d3207eec3482fbed1f7d00'
 
 client = LlamaStackAsLibraryClient("together")
 _ = client.initialize()
