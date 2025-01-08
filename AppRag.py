@@ -21,24 +21,37 @@ if st.button("Submit"):
         urls = [url.strip() for url in url_input.split("\n") if url.strip()]
 
         # Create attachments from the user-provided URLs
+        # attachments = [
+        #     {
+        #         "content": f"https://raw.githubusercontent.com/pytorch/torchtune/main/docs/source/tutorials/{url}",
+        #         "mime_type": "text/plain",
+        #     }
+        #     for url in urls
+        # ]
         attachments = [
             {
-                "content": f"https://raw.githubusercontent.com/pytorch/torchtune/main/docs/source/tutorials/{url}",
+                "content": f"{url_input}",
                 "mime_type": "text/plain",
             }
             for url in urls
         ]
 
         # Define the user prompts with the dynamic attachments
+        # user_prompts = [
+        #     (
+        #         f"I am attaching documentation from the provided URLs. Help me answer questions I will ask next. {user_prompt}",
+        #         attachments,
+        #     ),
+        #     (
+        #         user_prompt,  # Use the user's question here
+        #         None,
+        #     ),
+        # ]
         user_prompts = [
             (
-                "I am attaching documentation from the provided URLs. Help me answer questions I will ask next.",
+                f"I am attaching documentation from the provided URLs. Help me answer questions I will ask next. {user_prompt}",
                 attachments,
-            ),
-            (
-                user_prompt,  # Use the user's question here
-                None,
-            ),
+            )
         ]
 
         # Get the RAG response
