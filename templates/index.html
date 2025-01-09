@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Model Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>RAG Model Chatbot</h1>
+    <h2>Ask me anything!</h2>
+
+    <form method="POST">
+        <label for="user_prompt">Enter your question:</label>
+        <input type="text" id="user_prompt" name="user_prompt" required>
+        <br><br>
+
+        <label for="url_input">Enter one or more URLs (one per line):</label>
+        <textarea id="url_input" name="url_input" rows="5" required></textarea>
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if response %}
+        <h2>Response:</h2>
+        {% for sentence in response %}
+            <p>{{ sentence }}</p>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
