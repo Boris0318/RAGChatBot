@@ -9,16 +9,35 @@ from termcolor import cprint
 
 # load_dotenv()
 
-def initialize_client(api_key):
+# def initialize_client(api_key):
+#     os.environ['TOGETHER_API_KEY'] = api_key  # Set the API key from the user input
+#     client = LlamaStackAsLibraryClient("together")
+#     initialized_client = client.initialize()
+#     # _ = client.initialize()
+#     return initialized_client
+
+# model_id = "meta-llama/Llama-3.1-70B-Instruct"
+
+# def create_rag_agent(client):
+#     agent_config = AgentConfig(
+#         model=model_id,
+#         instructions="You are a helpful assistant",
+#         tools=[{"type": "memory"}],  # Enable Memory (RAG)
+#         enable_session_persistence=False,
+#     )
+#     rag_agent = Agent(client, agent_config)
+#     session_id = rag_agent.create_session("test-session")
+#     return rag_agent, session_id
+
+def get_rag_responses(user_prompts, api_key):
+    model_id = "meta-llama/Llama-3.1-70B-Instruct"
     os.environ['TOGETHER_API_KEY'] = api_key  # Set the API key from the user input
     client = LlamaStackAsLibraryClient("together")
-    initialized_client = client.initialize()
-    # _ = client.initialize()
-    return initialized_client
+    _ = client.initialize()
 
-model_id = "meta-llama/Llama-3.1-70B-Instruct"
+    # client = initialize_client(api_key)  # Initialize the client with the user's API key
+    # rag_agent, session_id = create_rag_agent(client)  # Create the RAG agent
 
-def create_rag_agent(client):
     agent_config = AgentConfig(
         model=model_id,
         instructions="You are a helpful assistant",
@@ -27,11 +46,6 @@ def create_rag_agent(client):
     )
     rag_agent = Agent(client, agent_config)
     session_id = rag_agent.create_session("test-session")
-    return rag_agent, session_id
-
-def get_rag_responses(user_prompts, api_key):
-    client = initialize_client(api_key)  # Initialize the client with the user's API key
-    rag_agent, session_id = create_rag_agent(client)  # Create the RAG agent
 
     answerss = []
     for prompt, attachments in user_prompts:
