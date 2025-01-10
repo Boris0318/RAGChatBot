@@ -1,10 +1,10 @@
-llama-stack==0.0.61
+llama-stack==0.0.63
 blobfile==3.0.0
 fire==0.7.0
 httpx==0.28.1
 huggingface-hub==0.26.5
-llama-models==0.0.61
-llama-stack-client==0.0.61
+llama-models==0.0.63
+llama-stack-client==0.0.63
 prompt-toolkit==3.0.48
 python-dotenv==1.0.1
 pydantic>=2,<3
