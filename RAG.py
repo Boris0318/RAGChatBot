@@ -12,9 +12,9 @@ from termcolor import cprint
 def initialize_client(api_key):
     os.environ['TOGETHER_API_KEY'] = api_key  # Set the API key from the user input
     client = LlamaStackAsLibraryClient("together")
-    client.initialize()
+    initialize_client = client.initialize()
     # _ = client.initialize()
-    return client
+    return initialize_client
 
 model_id = "meta-llama/Llama-3.1-70B-Instruct"
 
