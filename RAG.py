@@ -33,7 +33,8 @@ def get_rag_responses(user_prompts, api_key):
     model_id = "meta-llama/Llama-3.1-70B-Instruct"
     os.environ['TOGETHER_API_KEY'] = api_key  # Set the API key from the user input
     client = LlamaStackAsLibraryClient("together")
-    _ = client.initialize()
+    # _ = client.initialize()
+    client.initialize()
 
     # client = initialize_client(api_key)  # Initialize the client with the user's API key
     # rag_agent, session_id = create_rag_agent(client)  # Create the RAG agent
