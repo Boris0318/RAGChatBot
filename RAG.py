@@ -32,8 +32,7 @@ from termcolor import cprint
 def get_rag_responses(user_prompts, api_key):
     model_id = "meta-llama/Llama-3.1-70B-Instruct"
     os.environ['TOGETHER_API_KEY'] = api_key  # Set the API key from the user input
-    # client = LlamaStackAsLibraryClient("together")
-    client = LlamaStackAsLibraryClient("/home/adminuser/venv")
+    client = LlamaStackAsLibraryClient("together")
     # _ = client.initialize()
     client.initialize()
 
