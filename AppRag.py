@@ -7,6 +7,8 @@ st.title("RAG Model Chatbot")
 # Add a header
 st.header("Ask me anything!")
 
+api_key = st.text_input("Enter your API key:", type="password")
+
 # Text input for user prompt
 user_prompt = st.text_input("Enter your question:")
 
@@ -16,7 +18,7 @@ url_input = st.text_area("URLs", height=100)
 
 # Button to submit the prompt
 if st.button("Submit"):
-    if user_prompt and url_input:
+    if api_key and user_prompt and url_input:
         # Split the URLs by newlines and strip any extra whitespace
         urls = [url.strip() for url in url_input.split("\n") if url.strip()]
 
@@ -56,7 +58,7 @@ if st.button("Submit"):
 
         # Get the RAG response
         # response = get_rag_responses(user_prompts)
-        respond = get_rag_responses(user_prompts)
+        respond = get_rag_responses(user_prompts, api_key)
         sentences = []
         sentence = []
         new_sentence_triggered = False  # Flag to indicate if a new sentence should be started
@@ -101,7 +103,7 @@ if st.button("Submit"):
 
             st.write(sentence)
         else:
-            st.warning("Please enter a question and at least one URL.")
+            st.warning("Please enter an API key, a question and at least one URL.")
                 
         
                 
