@@ -6,11 +6,13 @@ from llama_stack_client.types.agent_create_params import AgentConfig
 from llama_stack_client.types import Attachment
 from termcolor import cprint
 import toml
+import streamlit as st
 
 # from dotenv import load_dotenv
-with open(".streamlit/secrets.toml", "r") as f:
-    secrets = toml.load(f)
-os.environ['TOGETHER_API_KEY'] = secrets["TOGETHER_API_KEY"]
+# with open(".streamlit/secrets.toml", "r") as f:
+#     secrets = toml.load(f)
+# os.environ['TOGETHER_API_KEY'] = secrets["TOGETHER_API_KEY"]
+os.environ['TOGETHER_API_KEY'] = st.secrets["TOGETHER_API_KEY"]
 model_id = "meta-llama/Llama-3.1-70B-Instruct"
 # load_dotenv()
 
