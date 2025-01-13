@@ -5,41 +5,23 @@ from llama_stack_client.lib.agents.event_logger import EventLogger
 from llama_stack_client.types.agent_create_params import AgentConfig
 from llama_stack_client.types import Attachment
 from termcolor import cprint
-# from dotenv import load_dotenv
+import toml
 
+# from dotenv import load_dotenv
+with open("secrets.toml", "r") as f:
+    secrets = toml.load(f)
+os.environ['TOGETHER_API_KEY'] = secrets["TOGETHER_API_KEY"]
+model_id = "meta-llama/Llama-3.1-70B-Instruct"
 # load_dotenv()
 
-# def initialize_client(api_key):
-#     os.environ['TOGETHER_API_KEY'] = api_key  # Set the API key from the user input
-#     client = LlamaStackAsLibraryClient("together")
-#     initialized_client = client.initialize()
-#     # _ = client.initialize()
-#     return initialized_client
-
-# model_id = "meta-llama/Llama-3.1-70B-Instruct"
-
-# def create_rag_agent(client):
-#     agent_config = AgentConfig(
-#         model=model_id,
-#         instructions="You are a helpful assistant",
-#         tools=[{"type": "memory"}],  # Enable Memory (RAG)
-#         enable_session_persistence=False,
-#     )
-#     rag_agent = Agent(client, agent_config)
-#     session_id = rag_agent.create_session("test-session")
-#     return rag_agent, session_id
-
-def get_rag_responses(user_prompts, api_key):
-    model_id = "meta-llama/Llama-3.1-70B-Instruct"
-    os.environ['TOGETHER_API_KEY'] = api_key  # Set the API key from the user input
+# def get_rag_responses(user_prompts, api_key):
+def get_rag_responses(user_prompts):
+    # os.environ['TOGETHER_API_KEY'] = api_key  # Set the API key from the user input
     # client = LlamaStackAsLibraryClient("together")
     # client = LlamaStackAsLibraryClient("/Library/anaconda3/lib/python3.12/site-packages/llama_stack/templates/together/run.yaml")
     client = LlamaStackAsLibraryClient("build/together/run.yaml")
     # _ = client.initialize()
     client.initialize()
-
-    # client = initialize_client(api_key)  # Initialize the client with the user's API key
-    # rag_agent, session_id = create_rag_agent(client)  # Create the RAG agent
 
     agent_config = AgentConfig(
         model=model_id,
