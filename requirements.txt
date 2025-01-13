@@ -98,3 +98,4 @@ scikit-learn
 aiosqlite
 datasets
 torch
+PyPDF2
