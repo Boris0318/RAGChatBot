@@ -12,7 +12,8 @@ import streamlit as st
 # with open(".streamlit/secrets.toml", "r") as f:
 #     secrets = toml.load(f)
 # os.environ['TOGETHER_API_KEY'] = secrets["TOGETHER_API_KEY"]
-os.environ['TOGETHER_API_KEY'] = st.secrets["TOGETHER_API_KEY"]
+api_key = st.secrets["TOGETHER_API_KEY"]
+os.environ['TOGETHER_API_KEY'] = api_key
 model_id = "meta-llama/Llama-3.1-70B-Instruct"
 # load_dotenv()
 
