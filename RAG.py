@@ -8,7 +8,7 @@ from termcolor import cprint
 import toml
 
 # from dotenv import load_dotenv
-with open("secrets.toml", "r") as f:
+with open(".streamlit/secrets.toml", "r") as f:
     secrets = toml.load(f)
 os.environ['TOGETHER_API_KEY'] = secrets["TOGETHER_API_KEY"]
 model_id = "meta-llama/Llama-3.1-70B-Instruct"
