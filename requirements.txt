@@ -99,5 +99,3 @@ aiosqlite
 datasets
 torch
 PyPDF2
-io
-sys
