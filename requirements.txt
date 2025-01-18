@@ -57,7 +57,6 @@ psycopg2-binary==2.9.10
 faiss-cpu==1.9.0.post1
 opentelemetry-sdk==1.28.2
 transformers==4.46.3
-chromadb-client==0.5.23
 openai==1.54.5
 redis==5.2.1
 datasets==3.2.0
