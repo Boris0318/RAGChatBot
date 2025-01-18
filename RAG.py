@@ -9,30 +9,37 @@ import streamlit as st
 from PyPDF2 import PdfReader
 import io
 import sys
-import re
 
 api_key = st.secrets["TOGETHER_API_KEY"]
 os.environ['TOGETHER_API_KEY'] = api_key
 model_id = "meta-llama/Llama-3.1-70B-Instruct"
 # load_dotenv()
-
-
-def get_rag_responses_url(user_prompts):
-    # os.environ['TOGETHER_API_KEY'] = api_key  # Set the API key from the user input
-    # client = LlamaStackAsLibraryClient("together")
-    # client = LlamaStackAsLibraryClient("/Library/anaconda3/lib/python3.12/site-packages/llama_stack/templates/together/run.yaml")
-    client = LlamaStackAsLibraryClient("build/together/run.yaml")
+client = LlamaStackAsLibraryClient("build/together/run.yaml")
     # _ = client.initialize()
-    client.initialize()
+client.initialize()
 
-    agent_config = AgentConfig(
-        model=model_id,
-        instructions="You are a helpful assistant",
-        tools=[{"type": "memory"}],  # Enable Memory (RAG)
-        enable_session_persistence=False,
-    )
-    rag_agent = Agent(client, agent_config)
-    session_id = rag_agent.create_session("test-session")
+agent_config = AgentConfig(
+    model=model_id,
+    instructions="You are a helpful assistant",
+    tools=[{"type": "memory"}],  # Enable Memory (RAG)
+    enable_session_persistence=False,
+)
+rag_agent = Agent(client, agent_config)
+session_id = rag_agent.create_session("test-session")
+def get_rag_responses_url(user_prompts):
+
+    # client = LlamaStackAsLibraryClient("build/together/run.yaml")
+    # # _ = client.initialize()
+    # client.initialize()
+
+    # agent_config = AgentConfig(
+    #     model=model_id,
+    #     instructions="You are a helpful assistant",
+    #     tools=[{"type": "memory"}],  # Enable Memory (RAG)
+    #     enable_session_persistence=False,
+    # )
+    # rag_agent = Agent(client, agent_config)
+    # session_id = rag_agent.create_session("test-session")
 
     # answerss = []
     output_capture = io.StringIO()
