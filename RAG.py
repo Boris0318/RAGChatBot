@@ -13,43 +13,43 @@ import sys
 api_key = st.secrets["TOGETHER_API_KEY"]
 os.environ['TOGETHER_API_KEY'] = api_key
 model_id = "meta-llama/Llama-3.1-70B-Instruct"
-# load_dotenv()
-client = LlamaStackAsLibraryClient("build/together/run.yaml")
-    # _ = client.initialize()
-client.initialize()
 
-agent_config = AgentConfig(
-    model=model_id,
-    instructions="You are a helpful assistant",
-    tools=[{"type": "memory"}],  # Enable Memory (RAG)
-    enable_session_persistence=False,
-)
-rag_agent = Agent(client, agent_config)
-session_id = rag_agent.create_session("test-session")
+def initialize_client():
+    client = LlamaStackAsLibraryClient("build/together/run.yaml")
+    client.initialize()
+
+    agent_config = AgentConfig(
+        model=model_id,
+        instructions="You are a helpful assistant",
+        tools=[{"type": "memory"}],  # Enable Memory (RAG)
+        enable_session_persistence=False,
+    )
+    rag_agent = Agent(client, agent_config)
+    session_id = rag_agent.create_session("test-session")
+    st.session_state.rag_agent = rag_agent
+    st.session_state.session_id = session_id
+    return rag_agent, session_id
+#     rag_agent = Agent(client, agent_config)
+#     session_id = rag_agent.create_session("test-session")
+
 def get_rag_responses_url(user_prompts):
 
-    # client = LlamaStackAsLibraryClient("build/together/run.yaml")
-    # # _ = client.initialize()
-    # client.initialize()
+    if 'rag_agent' not in st.session_state:
+        rag_agent, session_id = initialize_client()
+    else:
+        rag_agent = st.session_state.rag_agent
+        session_id = st.session_state.session_id
 
-    # agent_config = AgentConfig(
-    #     model=model_id,
-    #     instructions="You are a helpful assistant",
-    #     tools=[{"type": "memory"}],  # Enable Memory (RAG)
-    #     enable_session_persistence=False,
-    # )
-    # rag_agent = Agent(client, agent_config)
-    # session_id = rag_agent.create_session("test-session")
-
-    # answerss = []
     output_capture = io.StringIO()
     for prompt, attachments in user_prompts:
         cprint(f'User> {prompt}', 'green')
+
         response = rag_agent.create_turn(
             messages=[{"role": "user", "content": prompt}],
             attachments=attachments,
             session_id=session_id,
         )
+
         for log in EventLogger().log(response):
             # response_str = str(log)
             # response_str = "\n".join(line for line in response_str.split("\n") if not line.startswith(("memory_retrieval", "inference")))
@@ -83,29 +83,16 @@ def get_rag_responses_url(user_prompts):
         # If there's no newline, return the output as is
         cleaned_output = captured_output
 
-    # Join the lines back together
     return cleaned_output
-    # lines = captured_output.splitlines()
-    # cleaned_output = "\n".join(lines[2:])
-    # return cleaned_output
-    # return answerss
 
 def get_rag_responses_pdf(user_prompts):
-    client = LlamaStackAsLibraryClient("build/together/run.yaml")
-    # _ = client.initialize()
-    client.initialize()
 
-    agent_config = AgentConfig(
-        model=model_id,
-        instructions="You are a helpful assistant",
-        tools=[{"type": "memory"}],  # Enable Memory (RAG)
-        enable_session_persistence=False,
-    )
-    rag_agent = Agent(client, agent_config)
-    session_id = rag_agent.create_session("test-session")
+    if 'rag_agent' not in st.session_state:
+        rag_agent, session_id = initialize_client()
+    else:
+        rag_agent = st.session_state.rag_agent
+        session_id = st.session_state.session_id
 
-    # answerss = []
-    
     output_capture = io.StringIO()
     for prompt, attachments in user_prompts:
         cprint(f'User> {prompt}', 'green')
