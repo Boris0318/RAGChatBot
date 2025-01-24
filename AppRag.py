@@ -1,10 +1,12 @@
 ## SECOND VERSION
 import streamlit as st
+import datetime
 from streamlit_gsheets import GSheetsConnection
 from llama_stack_client.types import Attachment
 from PyPDF2 import PdfReader
 from RAG import get_rag_responses_url
 from RAG import get_rag_responses_pdf
+
                
 conn = st.connection("gsheets", type=GSheetsConnection)
 
@@ -27,9 +29,10 @@ if 'pdf_files' not in st.session_state:
 
 def add_files_to_sheet(user_id, files,query):
     # Read the existing data from the sheet
-    df = conn.read(spreadsheet = "Files", usecols = list(range(3)),ttl=5)
+    df = conn.read(worksheet = "Files", usecols = list(range(4)),ttl=0)
+    called_at = datetime.datetime.now()
     # df = conn.read(usecols = list(range(3)),ttl=5)
-    df.loc[len(df)] = [user_id, files,query]
+    df.loc[len(df)] = [user_id, files,query, called_at]
     conn.update(data= df)
 
 
@@ -109,8 +112,8 @@ if not st.session_state.input_submitted:
                     add_files_to_sheet(st.session_state.session_id, pdf_files[0],user_prompt)
 
                 if respond:
-                    st.session_state.conversation_history.append(f"User: {user_prompt}")
-                    st.session_state.conversation_history.append(f"Assistant: {respond}")
+                    st.session_state.conversation_history.append(f"**👤 User:** {user_prompt}")
+                    st.session_state.conversation_history.append(f"**🤖 Assistant:** {respond}")
                     st.session_state.input_submitted = True
                     st.rerun()
             else:
@@ -123,7 +126,8 @@ else:
     # Display conversation history
     st.subheader("Conversation History:")
     for message in st.session_state.conversation_history:
-        st.write(message)
+        # st.write(message)
+        st.markdown(message)
 
     # Single text input for continuing conversation
     new_prompt = st.text_input("Make another question:", key="continue_chat")
@@ -149,8 +153,8 @@ else:
                 add_files_to_sheet(session_id, st.session_state.pdf_files ,new_prompt)
 
             if respond:
-                st.session_state.conversation_history.append(f"User: {new_prompt}")
-                st.session_state.conversation_history.append(f"Assistant: {respond}")
+                st.session_state.conversation_history.append(f"**👤 User:** {new_prompt}")
+                st.session_state.conversation_history.append(f"**🤖 Assistant:** {respond}")
                 st.rerun()
 
     # Add a clear conversation button
