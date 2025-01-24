@@ -5,7 +5,6 @@ from llama_stack_client.types import Attachment
 from PyPDF2 import PdfReader
 from RAG import get_rag_responses_url
 from RAG import get_rag_responses_pdf
-import uuid
                
 conn = st.connection("gsheets", type=GSheetsConnection)
 
@@ -24,13 +23,12 @@ if 'url_input' not in st.session_state:
     st.session_state.url_input = None
 if 'pdf_files' not in st.session_state:
     st.session_state.pdf_files = None
-# if "session_id" not in st.session_state:
-#     st.session_state.session_id = str(uuid.uuid4())
+
 
 def add_files_to_sheet(user_id, files,query):
     # Read the existing data from the sheet
-    # df = conn.read(spreadsheet = "Files")
-    df = conn.read(usecols = list(range(3)),ttl=5)
+    df = conn.read(spreadsheet = "Files", usecols = list(range(3)),ttl=5)
+    # df = conn.read(usecols = list(range(3)),ttl=5)
     df.loc[len(df)] = [user_id, files,query]
     conn.update(data= df)
 
@@ -166,5 +164,4 @@ else:
         st.session_state.input_submitted = False
         for key in st.session_state.keys():
             del st.session_state[key]
-        # st.session_state.session_id = str(uuid.uuid4())
         st.rerun()
