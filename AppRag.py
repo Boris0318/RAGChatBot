@@ -29,6 +29,7 @@ if 'pdf_files' not in st.session_state:
 
 def add_files_to_sheet(user_id, files,query):
     # Read the existing data from the sheet
+    conn = st.connection("gsheets", type=GSheetsConnection)
     df = conn.read(worksheet = "Files", usecols = list(range(4)),ttl=0)
     called_at = datetime.datetime.now()
     # df = conn.read(usecols = list(range(3)),ttl=5)
