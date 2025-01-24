@@ -98,3 +98,5 @@ aiosqlite
 datasets
 torch
 PyPDF2
+st-gsheets-connection
+

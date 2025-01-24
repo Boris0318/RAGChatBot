@@ -29,8 +29,7 @@ def initialize_client():
     st.session_state.rag_agent = rag_agent
     st.session_state.session_id = session_id
     return rag_agent, session_id
-#     rag_agent = Agent(client, agent_config)
-#     session_id = rag_agent.create_session("test-session")
+
 
 def get_rag_responses_url(user_prompts):
 
@@ -51,9 +50,6 @@ def get_rag_responses_url(user_prompts):
         )
 
         for log in EventLogger().log(response):
-            # response_str = str(log)
-            # response_str = "\n".join(line for line in response_str.split("\n") if not line.startswith(("memory_retrieval", "inference")))
-            # answerss.append(response_str)
             original_stdout = sys.stdout  # Save the original sys.stdout
             sys.stdout = output_capture
             try:
@@ -70,10 +66,6 @@ def get_rag_responses_url(user_prompts):
     if first_newline_index != -1:
         # Remove the first line
         captured_output = captured_output[first_newline_index + 1:]
-
-        # Remove "inference>" from the beginning of the second line
-        # if captured_output.startswith("inference>"):
-        #     captured_output = captured_output[len("inference>"):].lstrip()
         if captured_output.startswith("inference>"):
             captured_output = captured_output[10:]
 
@@ -83,7 +75,7 @@ def get_rag_responses_url(user_prompts):
         # If there's no newline, return the output as is
         cleaned_output = captured_output
 
-    return cleaned_output
+    return cleaned_output, session_id
 
 def get_rag_responses_pdf(user_prompts):
 
@@ -102,9 +94,6 @@ def get_rag_responses_pdf(user_prompts):
             session_id=session_id,
         )
         for log in EventLogger().log(response):
-            # response_str = str(log)
-            # response_str = "\n".join(line for line in response_str.split("\n") if not line.startswith(("memory_retrieval", "inference")))
-            # answerss.append(response_str)
             original_stdout = sys.stdout  # Save the original sys.stdout
             sys.stdout = output_capture
             try:
@@ -118,10 +107,6 @@ def get_rag_responses_pdf(user_prompts):
     if first_newline_index != -1:
         # Remove the first line
         captured_output = captured_output[first_newline_index + 1:]
-
-        # Remove "inference>" from the beginning of the second line
-        # if captured_output.startswith("inference>"):
-        #     captured_output = captured_output[len("inference>"):].lstrip()
         if captured_output.startswith("inference>"):
             captured_output = captured_output[10:]
 
@@ -130,12 +115,6 @@ def get_rag_responses_pdf(user_prompts):
         # If there's no newline, return the output as is
         cleaned_output = captured_output
 
-
-    # cleaned_output = re.sub(r"memory_retrieval>.*?inference>", "", captured_output_cleaned)
-    # Optionally, clean any extra spaces or newlines
-    # cleaned_output = " ".join(cleaned_output.split())
-    # lines = captured_output.splitlines()
-    # cleaned_output = "\n".join(lines[2:])
-    return cleaned_output
+    return cleaned_output, session_id
 
 
