@@ -7,7 +7,7 @@ from PyPDF2 import PdfReader
 from RAG import get_rag_responses_url
 from RAG import get_rag_responses_pdf
 
-               
+# Connection             
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 
