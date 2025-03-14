@@ -13,7 +13,7 @@ import sys
 api_key = st.secrets["TOGETHER_API_KEY"]
 os.environ['TOGETHER_API_KEY'] = api_key
 model_id = "meta-llama/Llama-3.1-70B-Instruct"
-
+# Initialize it
 def initialize_client():
     client = LlamaStackAsLibraryClient("build/together/run.yaml")
     client.initialize()
